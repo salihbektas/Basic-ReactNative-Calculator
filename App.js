@@ -42,15 +42,30 @@ const App = () =>  {
       current = parseFloat(result.replace(",", "."));
     }
     if(operation === "+"){
-      setResult(String(current+prev[prev.length-1]).replace(".", ","));
-      setPrev([...prev, current + prev[prev.length-1]]);
-      setOperation("");
-      return;
+      setResult(String(prev[prev.length-1]+current).replace(".", ","));
+      setPrev([...prev, prev[prev.length-1] + current]);
     }
+
+    if(operation === "-"){
+      setResult(String(prev[prev.length-1]-current).replace(".", ","));
+      setPrev([...prev, prev[prev.length-1] - current]);
+    }
+
+    if(operation === "x"){
+      setResult(String(prev[prev.length-1]*current).replace(".", ","));
+      setPrev([...prev, prev[prev.length-1] * current]);
+    }
+
+    if(operation === "/"){
+      setResult(String(prev[prev.length-1]/current).replace(".", ","));
+      setPrev([...prev, prev[prev.length-1] / current]);
+    }
+
+    setOperation("");
   }
 
-  function handleAdd(){
-    setOperation("+");
+  function handleOperation(operator){
+    setOperation(operator);
     setReset(true);
     if(prev[prev.length -1] !== 0)
       handleEaqual();
@@ -89,19 +104,19 @@ const App = () =>  {
 
       <View style={styles.buttonSide}>
 
-        <TouchableOpacity onPress={handleAdd} style={styles.operationButton}>
+        <TouchableOpacity onPress={() => handleOperation("+")} style={styles.operationButton}>
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {setResult(result + '')}} style={styles.operationButton}>
+        <TouchableOpacity onPress={() => handleOperation("-")} style={styles.operationButton}>
           <Text style={styles.buttonText}>-</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {setResult(result + '')}} style={styles.operationButton}>
-          <Text style={styles.buttonText}>X</Text>
+        <TouchableOpacity onPress={() => handleOperation("x")} style={styles.operationButton}>
+          <Text style={styles.buttonText}>x</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {setResult(result + '')}} style={styles.operationButton}>
+        <TouchableOpacity onPress={() => handleOperation("/")} style={styles.operationButton}>
           <Text style={styles.buttonText}>/</Text>
         </TouchableOpacity>
 
@@ -123,15 +138,15 @@ const App = () =>  {
         </TouchableOpacity>
 
 
-        <TouchableOpacity onPress={()=> {setResult(result + '4')}} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("4")} style={styles.numberButton}>
           <Text style={styles.buttonText}>4</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {setResult(result + '5')}} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("5")} style={styles.numberButton}>
           <Text style={styles.buttonText}>5</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {setResult(result + '6')}} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("6")} style={styles.numberButton}>
           <Text style={styles.buttonText}>6</Text>
         </TouchableOpacity>
 
@@ -140,15 +155,15 @@ const App = () =>  {
         </TouchableOpacity>
 
 
-        <TouchableOpacity onPress={()=> {setResult(result + '1')}} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("1")} style={styles.numberButton}>
           <Text style={styles.buttonText}>1</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {setResult(result + '2')}} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("2")} style={styles.numberButton}>
           <Text style={styles.buttonText}>2</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {setResult(result + '3')}} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("3")} style={styles.numberButton}>
           <Text style={styles.buttonText}>3</Text>
         </TouchableOpacity>
 
