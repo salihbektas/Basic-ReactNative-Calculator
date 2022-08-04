@@ -12,7 +12,8 @@ import {
 
 const App = () =>  {
   const [result, setResult] = useState("");
-  const [prev, setPrev] = useState([0]);
+  const [prev, setPrev] = useState(0);
+  const [history, setHistory] = useState([]);
   const [operation, setOperation] = useState("");
   const [reset, setReset] = useState(false);
   
@@ -31,9 +32,10 @@ const App = () =>  {
     setReset(true);
     
     let current;
-    console.log(prev);
-    
-    console.log("current : " + current);
+    let res;
+    console.log(history);
+
+    console.log("prev : " + prev);
     
     console.log("operation : " + operation);
 
@@ -41,43 +43,43 @@ const App = () =>  {
     if(result !== 0){
       current = parseFloat(result.replace(",", "."));
     }
+    console.log("current : " + current);
     if(operation === "+"){
-      setResult(String(prev[prev.length-1]+current).replace(".", ","));
-      setPrev([...prev, prev[prev.length-1] + current]);
+      res = prev + current;
     }
 
     if(operation === "-"){
-      setResult(String(prev[prev.length-1]-current).replace(".", ","));
-      setPrev([...prev, prev[prev.length-1] - current]);
+      res = prev - current;
     }
 
     if(operation === "x"){
-      setResult(String(prev[prev.length-1]*current).replace(".", ","));
-      setPrev([...prev, prev[prev.length-1] * current]);
+      res = prev * current;
     }
 
     if(operation === "/"){
-      setResult(String(prev[prev.length-1]/current).replace(".", ","));
-      setPrev([...prev, prev[prev.length-1] / current]);
+      res = prev / current;
     }
 
+    setResult(String(res).replace(".", ","));
+    setPrev(prev + current);
+    setHistory([...history, `${prev} ${operation} ${current} = ${res}`]);
     setOperation("");
   }
 
   function handleOperation(operator){
     setOperation(operator);
     setReset(true);
-    if(prev[prev.length -1] !== 0)
+    if(operation !== "")
       handleEaqual();
     else{
-      setPrev([...prev, parseFloat(result.replace(",", "."))]);
+      setPrev(parseFloat(result.replace(",", ".")));
       setResult("");
     }
   }
 
   function handleCE(){
     setOperation("");
-    setPrev([0]);
+    setPrev(0);
     setResult("");
     setReset(false);
   }
