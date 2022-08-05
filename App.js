@@ -17,7 +17,6 @@ const App = () =>  {
   const [history, setHistory] = useState([]);
   const [operation, setOperation] = useState("");
   const [reset, setReset] = useState(false);
-  const arr = [10000,2,3,4,5,6,7,8,9];
   
 
 
@@ -64,7 +63,7 @@ const App = () =>  {
 
     setResult(String(res).replace(".", ","));
     setPrev(prev + current);
-    setHistory([...history, `${prev} ${operation} ${current} = ${res}`]);
+    setHistory([`${prev} ${operation} ${current} = ${res}`, ...history]);
     setOperation("");
   }
 
@@ -105,8 +104,8 @@ const App = () =>  {
       <View style={styles.results}>
         <ScrollView contentContainerStyle={styles.scroll} contentOffset = {{y:50}}>
           {
-            arr.map((value) =>(
-              <Text style={{fontSize:22, transform: [{ scaleY: -1 }]}}>{value}</Text>
+            history.map((value) =>(
+              <Text style={{fontSize:22, transform: [{ scaleY: -1 }], color: "white"}}>{value}</Text>
             ))
             
           }
@@ -229,7 +228,6 @@ const styles = StyleSheet.create({
   scroll:{
     flexGrow: 1,
     alignItems: "flex-end",
-    backgroundColor:"blue",
     transform: [{ scaleY: -1 }],
   },
 
