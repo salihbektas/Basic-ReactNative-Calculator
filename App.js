@@ -17,6 +17,7 @@ const App = () =>  {
   const [history, setHistory] = useState([]);
   const [operation, setOperation] = useState("");
   const [reset, setReset] = useState(false);
+  const [ref, setRef] = useState();
   
 
 
@@ -83,6 +84,7 @@ const App = () =>  {
     setPrev(0);
     setResult("");
     setReset(false);
+    setHistory([]);
   }
 
   function handleDigit(digit){
@@ -102,10 +104,12 @@ const App = () =>  {
       </View>
 
       <View style={styles.results}>
-        <ScrollView contentContainerStyle={styles.scroll} contentOffset = {{y:50}}>
+        <ScrollView contentContainerStyle={styles.scroll}
+                    ref={scroll => setRef(scroll)}
+                    onContentSizeChange={()=>ref.scrollToEnd({animated: false})}>
           {
             history.map((value) =>(
-              <Text style={{fontSize:22, transform: [{ scaleY: -1 }], color: "white"}}>{value}</Text>
+              <Text style={{fontSize:22, color: "white"}}>{value}</Text>
             ))
             
           }
@@ -226,9 +230,9 @@ const styles = StyleSheet.create({
   },
 
   scroll:{
-    flexGrow: 1,
+    flexGrow:1,
+    flexDirection: "column-reverse",
     alignItems: "flex-end",
-    transform: [{ scaleY: -1 }],
   },
 
   resultText:{
