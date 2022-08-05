@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 
 
@@ -16,6 +17,7 @@ const App = () =>  {
   const [history, setHistory] = useState([]);
   const [operation, setOperation] = useState("");
   const [reset, setReset] = useState(false);
+  const arr = [10000,2,3,4,5,6,7,8,9];
   
 
 
@@ -101,6 +103,15 @@ const App = () =>  {
       </View>
 
       <View style={styles.results}>
+        <ScrollView contentContainerStyle={styles.scroll} contentOffset = {{y:50}}>
+          {
+            arr.map((value) =>(
+              <Text style={{fontSize:22, transform: [{ scaleY: -1 }]}}>{value}</Text>
+            ))
+            
+          }
+        </ScrollView>
+
         <Text style={styles.resultText}>{result === "" ? "0" : result}</Text>
       </View>
 
@@ -210,10 +221,16 @@ const styles = StyleSheet.create({
 
   results: {
     flex: 4,
-
     justifyContent: "flex-end",
     alignItems: "flex-end",
     paddingRight: 12,
+  },
+
+  scroll:{
+    flexGrow: 1,
+    alignItems: "flex-end",
+    backgroundColor:"blue",
+    transform: [{ scaleY: -1 }],
   },
 
   resultText:{
