@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Platform,
 } from 'react-native';
 
 
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
   
   header: {
     flex: 1,
-    marginTop: -StatusBar.currentHeight,
+    marginTop: Platform.OS === 'android' ? -StatusBar.currentHeight : 0,
     backgroundColor: "#333333",
     justifyContent: "flex-end",
     paddingLeft:12,
