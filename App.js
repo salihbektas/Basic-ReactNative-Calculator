@@ -7,6 +7,7 @@ import {
   Dimensions,
   SafeAreaView,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 
 
@@ -99,6 +100,8 @@ const App = () =>  {
 
   return (
     <SafeAreaView style={styles.main}>
+      <StatusBar barStyle="light-content" />
+
       <View style={styles.header}>
         <Text style={styles.headerText}>Calculator</Text>
       </View>
@@ -120,78 +123,78 @@ const App = () =>  {
 
       <View style={styles.buttonSide}>
 
-        <TouchableOpacity onPress={() => handleOperation("+")} style={styles.operationButton}>
-          <Text style={styles.buttonText}>+</Text>
+        <TouchableOpacity onPress={() => handleOperation("+")} style={{...styles.button, ...styles.operationButton}}>
+          <Text style={{...styles.buttonText, color:"black"}}>+</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => handleOperation("-")} style={styles.operationButton}>
-          <Text style={styles.buttonText}>-</Text>
+        <TouchableOpacity onPress={() => handleOperation("-")} style={{...styles.button, ...styles.operationButton}}>
+          <Text style={{...styles.buttonText, color:"black"}}>-</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => handleOperation("x")} style={styles.operationButton}>
-          <Text style={styles.buttonText}>x</Text>
+        <TouchableOpacity onPress={() => handleOperation("x")} style={{...styles.button, ...styles.operationButton}}>
+          <Text style={{...styles.buttonText, color:"black"}}>x</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => handleOperation("/")} style={styles.operationButton}>
-          <Text style={styles.buttonText}>/</Text>
+        <TouchableOpacity onPress={() => handleOperation("/")} style={{...styles.button, ...styles.operationButton}}>
+          <Text style={{...styles.buttonText, color:"black"}}>/</Text>
         </TouchableOpacity>
 
 
-        <TouchableOpacity onPress={()=> handleDigit("7")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("7")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>7</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> handleDigit("8")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("8")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>8</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> handleDigit("9")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("9")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>9</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {result.length >= 0 ? setResult(result.slice(0,-1)) : null}} style={styles.operationButton}>
+        <TouchableOpacity onPress={()=> {result.length >= 0 ? setResult(result.slice(0,-1)) : null}} style={{...styles.button}}>
           <Text style={styles.buttonText}>C</Text>
         </TouchableOpacity>
 
 
-        <TouchableOpacity onPress={()=> handleDigit("4")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("4")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>4</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> handleDigit("5")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("5")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>5</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> handleDigit("6")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("6")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>6</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleCE} style={styles.operationButton}>
+        <TouchableOpacity onPress={handleCE} style={{...styles.button}}>
           <Text style={styles.buttonText}>CE</Text>
         </TouchableOpacity>
 
 
-        <TouchableOpacity onPress={()=> handleDigit("1")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("1")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>1</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> handleDigit("2")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("2")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>2</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> handleDigit("3")} style={styles.numberButton}>
+        <TouchableOpacity onPress={()=> handleDigit("3")} style={{...styles.button, ...styles.numberButton}}>
           <Text style={styles.buttonText}>3</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleComma} style={styles.operationButton}>
+        <TouchableOpacity onPress={handleComma} style={{...styles.button}}>
           <Text style={styles.buttonText}>,</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={()=> {result !== "" ? setResult(result + '0') : null}} style={{...styles.numberButton, width:"44%"}}>
+        <TouchableOpacity onPress={()=> {result !== "" ? setResult(result + '0') : null}} style={{...styles.button, ...styles.numberButton, width:"44%"}}>
           <Text style={styles.buttonText}>0</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleEaqual} style={{...styles.operationButton, width:"44%"}}>
+        <TouchableOpacity onPress={handleEaqual} style={{...styles.button, width:"44%"}}>
           <Text style={styles.buttonText}>=</Text>
         </TouchableOpacity>
 
@@ -206,13 +209,14 @@ const styles = StyleSheet.create({
   
   main: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#202020",
   },
   
   header: {
     flex: 1,
-    backgroundColor: "orange",
-    justifyContent: "center",
+    marginTop: -StatusBar.currentHeight,
+    backgroundColor: "#333333",
+    justifyContent: "flex-end",
     paddingLeft:12,
   },
 
@@ -253,7 +257,7 @@ const styles = StyleSheet.create({
     justifyContent:"space-evenly",
   },
 
-  operationButton:{
+  button:{
     height: windowHeight/12,
     width: "20%",
     borderRadius:windowHeight/30,
@@ -261,23 +265,21 @@ const styles = StyleSheet.create({
     marginTop: windowHeight/60,
     justifyContent: "center",
     alignItems:"center",
-    backgroundColor:"orange",
+    backgroundColor:"#f09a36",
+  },
+
+  operationButton:{
+    backgroundColor:"#a6a6a6",
   },
 
   numberButton:{
-    height: windowHeight/12,
-    width: "20%",
-    borderRadius:windowHeight/30,
-    marginLeft:"4%",
-    marginTop: windowHeight/60,
-    justifyContent: "center",
-    alignItems:"center",
-    backgroundColor:"lime",
+    backgroundColor:"#333333",
   },
 
   buttonText: {
     fontSize:24,
-    fontWeight:"bold"
+    fontWeight:"bold",
+    color: "white",
   }
 
 });
