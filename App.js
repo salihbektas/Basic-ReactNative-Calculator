@@ -33,7 +33,6 @@ const App = () =>  {
   }
 
   function handleEaqual(){
-    setReset(true);
     
     let current;
     let res;
@@ -44,9 +43,12 @@ const App = () =>  {
     console.log("operation : " + operation);
 
     console.log("result : " + result);
-    if(result !== 0){
-      current = parseFloat(result.replace(",", "."));
+    if(result === ""){
+      return;
     }
+
+    current = parseFloat(result.replace(",", "."));
+
     console.log("current : " + current);
     if(operation === "+"){
       res = prev + current;
@@ -68,6 +70,7 @@ const App = () =>  {
     setPrev(prev + current);
     setHistory([`${prev} ${operation} ${current} = ${res}`, ...history]);
     setOperation("");
+    setReset(true);
   }
 
   function handleOperation(operator){
