@@ -90,12 +90,17 @@ const App = () =>  {
   }
 
   function handleDigit(digit){
+    let tempHistory = ["", ...history];
     if(reset){
       setReset(false);
       setResult(digit);
     }
-    else
+    else{
       setResult(result + digit);
+      tempHistory[0] = result + digit;
+      console.log(tempHistory);
+      setHistory(tempHistory);
+    }
   }
 
 
