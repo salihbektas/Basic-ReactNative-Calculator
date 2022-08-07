@@ -74,13 +74,13 @@ const App = () =>  {
   }
 
   function handleOperation(operator){
-    setOperation(operator);
-    setReset(true);
     if(operation !== "")
       handleEaqual();
     else{
       setPrev(parseFloat(result.replace(",", ".")));
       setResult("");
+      setOperation(operator);
+      setReset(true);
     }
   }
 
