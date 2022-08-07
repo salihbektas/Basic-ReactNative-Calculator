@@ -33,6 +33,9 @@ const App = () =>  {
   }
 
   function handleEaqual(){
+
+    if(operation === "")
+      return;
     
     let current;
     let res;
