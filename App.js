@@ -68,15 +68,24 @@ const App = () =>  {
 
     setResult(String(res).replace(".", ","));
     setPrev(prev + current);
-    setHistory([`${prev} ${operation} ${current} = ${res}`, ...history]);
+    let tempHistory = history;
+    tempHistory[0] = `${prev} ${operation} ${current} = ${res}`;
+    setHistory(tempHistory);
     setOperation("");
     setReset(true);
   }
 
   function handleOperation(operator){
+    if(result === "")
+      return;
+
+    let tempHistory = [...history];
+
     if(operation !== "")
       handleEaqual();
     else{
+      tempHistory[0] += ` ${operator} `;
+      setHistory(tempHistory); 
       setPrev(parseFloat(result.replace(",", ".")));
       setResult("");
       setOperation(operator);
@@ -93,17 +102,21 @@ const App = () =>  {
   }
 
   function handleDigit(digit){
-    let tempHistory = ["", ...history];
+    let tempHistory = [...history];
     if(reset){
       setReset(false);
       setResult(digit);
+      if(operation === "")
+        tempHistory = [String(digit), ...tempHistory];
+      else
+        tempHistory[0] += String(digit);
     }
     else{
       setResult(result + digit);
       tempHistory[0] = result + digit;
-      console.log(tempHistory);
-      setHistory(tempHistory);
     }
+    console.log(tempHistory);
+    setHistory(tempHistory);
   }
 
 
