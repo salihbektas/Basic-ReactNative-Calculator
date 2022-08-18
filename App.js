@@ -96,7 +96,7 @@ const App = () =>  {
     }
   }
 
-  function handleCE(){
+  function handleAC(){
     setOperation("");
     setPrev(0);
     setResult("");
@@ -178,7 +178,7 @@ const App = () =>  {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={()=> {result.length >= 0 ? setResult(result.slice(0,-1)) : null}} style={{...styles.button}}>
-          <Text style={styles.buttonText}>C</Text>
+          <Text style={styles.buttonText}>DEL</Text>
         </TouchableOpacity>
 
 
@@ -194,8 +194,8 @@ const App = () =>  {
           <Text style={styles.buttonText}>6</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleCE} style={{...styles.button}}>
-          <Text style={styles.buttonText}>CE</Text>
+        <TouchableOpacity onPress={handleAC} style={{...styles.button}}>
+          <Text style={styles.buttonText}>AC</Text>
         </TouchableOpacity>
 
 
