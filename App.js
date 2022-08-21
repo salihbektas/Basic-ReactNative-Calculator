@@ -106,15 +106,15 @@ const App = () =>  {
   function handleDigit(digit){
     let tempHistory = [...history];
 
-    setResult(result + digit);
-
     if(reset){
       setReset(false);
       tempHistory = [String(digit), ...tempHistory];
+      setResult(digit);
     }
-    else
+    else{
       tempHistory[0] += digit;
-
+      setResult(result + digit);
+    }
     console.log(tempHistory);
     setHistory(tempHistory);
   }
