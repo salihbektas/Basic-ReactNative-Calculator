@@ -18,7 +18,7 @@ const App = () =>  {
   const [prev, setPrev] = useState(0);
   const [history, setHistory] = useState([]);
   const [operation, setOperation] = useState("");
-  const [reset, setReset] = useState(false);
+  const [reset, setReset] = useState(true);
   const [ref, setRef] = useState();
   
 
@@ -70,7 +70,6 @@ const App = () =>  {
     }
 
     setResult(String(res).replace(".", ","));
-    setPrev(prev + current);
     let tempHistory = history;
     tempHistory[0] = `${prev} ${operation} ${current} = ${res}`;
     setHistory(tempHistory);
@@ -84,15 +83,15 @@ const App = () =>  {
 
     let tempHistory = [...history];
 
-    if(operation !== "")
+    if(operation !== ""){
       handleEaqual();
+    }
     else{
       tempHistory[0] += ` ${operator} `;
       setHistory(tempHistory); 
       setPrev(parseFloat(result.replace(",", ".")));
       setResult("");
       setOperation(operator);
-      setReset(true);
     }
   }
 
@@ -100,24 +99,22 @@ const App = () =>  {
     setOperation("");
     setPrev(0);
     setResult("");
-    setReset(false);
+    setReset(true);
     setHistory([]);
   }
 
   function handleDigit(digit){
     let tempHistory = [...history];
+
+    setResult(result + digit);
+
     if(reset){
       setReset(false);
-      setResult(digit);
-      if(operation === "")
-        tempHistory = [String(digit), ...tempHistory];
-      else
-        tempHistory[0] += String(digit);
+      tempHistory = [String(digit), ...tempHistory];
     }
-    else{
-      setResult(result + digit);
-      tempHistory[0] = result + digit;
-    }
+    else
+      tempHistory[0] += digit;
+
     console.log(tempHistory);
     setHistory(tempHistory);
   }
