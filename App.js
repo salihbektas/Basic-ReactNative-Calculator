@@ -39,20 +39,13 @@ const App = () =>  {
     
     let current;
     let res;
-    console.log(history);
 
-    console.log("prev : " + prev);
-    
-    console.log("operation : " + operation);
-
-    console.log("result : " + result);
     if(result === ""){
       return;
     }
 
     current = parseFloat(result.replace(",", "."));
 
-    console.log("current : " + current);
     if(operation === "+"){
       res = prev + current;
     }
@@ -70,11 +63,14 @@ const App = () =>  {
     }
 
     setResult(String(res).replace(".", ","));
+    setPrev(res);
     let tempHistory = history;
     tempHistory[0] = `${prev} ${operation} ${current} = ${res}`;
     setHistory(tempHistory);
     setOperation("");
     setReset(true);
+
+    return res;
   }
 
   function handleOperation(operator){
@@ -84,15 +80,21 @@ const App = () =>  {
     let tempHistory = [...history];
 
     if(operation !== ""){
-      handleEaqual();
+      let val = handleEaqual();
+      setHistory((currentHistory) => [`${val} ${operator} `, ...currentHistory]);
+      setReset(false);
     }
-    else{
+    else if(!reset){
       tempHistory[0] += ` ${operator} `;
       setHistory(tempHistory); 
       setPrev(parseFloat(result.replace(",", ".")));
-      setResult("");
-      setOperation(operator);
     }
+    else{
+      setHistory((currentHistory) => [`${result} ${operator} `, ...currentHistory]);
+      setReset(false);
+    }
+    setResult("");
+    setOperation(operator);
   }
 
   function handleAC(){
@@ -115,7 +117,6 @@ const App = () =>  {
       tempHistory[0] += digit;
       setResult(result + digit);
     }
-    console.log(tempHistory);
     setHistory(tempHistory);
   }
 
