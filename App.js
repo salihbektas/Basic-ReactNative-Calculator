@@ -306,7 +306,8 @@ const styles = StyleSheet.create({
   buttonSide: {
     flex: 5,
     flexDirection: "row",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    paddingBottom: windowHeight / 30
   },
 
   row: {
