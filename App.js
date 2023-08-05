@@ -123,8 +123,10 @@ const App = () => {
           ref={(scroll) => setRef(scroll)}
           onContentSizeChange={() => ref.scrollToEnd({ animated: false })}
         >
-          {history.map((value) => (
-            <Text style={{ fontSize: 22, color: "white" }}>{value}</Text>
+          {history.map((value, index) => (
+            <Text style={{ fontSize: 22, color: "white" }} key={index}>
+              {value}
+            </Text>
           ))}
         </ScrollView>
 
