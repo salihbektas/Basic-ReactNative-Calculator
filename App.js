@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import {
   StyleSheet,
   Text,
@@ -17,7 +17,7 @@ const App = () => {
   const [history, setHistory] = useState([])
   const [operation, setOperation] = useState("")
   const [reset, setReset] = useState(true)
-  const [ref, setRef] = useState()
+  const ref = useRef()
 
   function handleComma() {
     if (result === "") setResult("0,")
@@ -120,8 +120,10 @@ const App = () => {
       <View style={styles.results}>
         <ScrollView
           contentContainerStyle={styles.scroll}
-          ref={(scroll) => setRef(scroll)}
-          onContentSizeChange={() => ref.scrollToEnd({ animated: false })}
+          ref={ref}
+          onContentSizeChange={() =>
+            ref.current.scrollToEnd({ animated: false })
+          }
         >
           {history.map((value, index) => (
             <Text style={{ fontSize: 22, color: "white" }} key={index}>
