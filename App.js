@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -9,88 +9,85 @@ import {
   ScrollView,
   StatusBar,
   Platform
-} from "react-native"
+} from 'react-native'
 
 const App = () => {
-  const [result, setResult] = useState("")
+  const [result, setResult] = useState('')
   const [prev, setPrev] = useState(0)
   const [history, setHistory] = useState([])
-  const [operation, setOperation] = useState("")
+  const [operation, setOperation] = useState('')
   const [reset, setReset] = useState(true)
   const ref = useRef()
 
   function handleComma() {
-    if (result === "") setResult("0,")
-    else if (!result.includes(",")) setResult(result + ",")
+    if (result === '') setResult('0,')
+    else if (!result.includes(',')) setResult(result + ',')
   }
 
   function handleEaqual() {
-    if (operation === "") return
+    if (operation === '') return
 
     let current
     let res
 
-    if (result === "") {
+    if (result === '') {
       return
     }
 
-    current = parseFloat(result.replace(",", "."))
+    current = parseFloat(result.replace(',', '.'))
 
-    if (operation === "+") {
+    if (operation === '+') {
       res = prev + current
     }
 
-    if (operation === "-") {
+    if (operation === '-') {
       res = prev - current
     }
 
-    if (operation === "x") {
+    if (operation === 'x') {
       res = prev * current
     }
 
-    if (operation === "/") {
+    if (operation === '/') {
       res = prev / current
     }
 
-    setResult(String(res).replace(".", ","))
+    setResult(String(res).replace('.', ','))
     setPrev(res)
     let tempHistory = history
     tempHistory[0] = `${prev} ${operation} ${current} = ${res}`
     setHistory(tempHistory)
-    setOperation("")
+    setOperation('')
     setReset(true)
 
     return res
   }
 
   function handleOperation(operator) {
-    if (result === "") return
+    if (result === '') return
 
     let tempHistory = [...history]
 
-    if (operation !== "") {
+    if (operation !== '') {
       let val = handleEaqual()
       setHistory((currentHistory) => [`${val} ${operator} `, ...currentHistory])
       setReset(false)
     } else if (!reset) {
       tempHistory[0] += ` ${operator} `
       setHistory(tempHistory)
-      setPrev(parseFloat(result.replace(",", ".")))
+      setPrev(parseFloat(result.replace(',', '.')))
     } else {
-      setHistory((currentHistory) => [
-        `${result} ${operator} `,
-        ...currentHistory
-      ])
+      setHistory((currentHistory) => [`${result} ${operator} `, ...currentHistory])
       setReset(false)
     }
-    setResult("")
+    setResult('')
     setOperation(operator)
   }
 
   function handleAC() {
-    setOperation("")
+    setOperation('')
     setPrev(0)
-    setResult("")
+    setResult('')
     setReset(true)
     setHistory([])
   }
@@ -111,7 +108,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.main}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle='light-content' />
 
       <View style={styles.header}>
         <Text style={styles.headerText}>Calculator</Text>
@@ -121,227 +118,173 @@ const App = () => {
         <ScrollView
           contentContainerStyle={styles.scroll}
           ref={ref}
-          onContentSizeChange={() =>
-            ref.current.scrollToEnd({ animated: false })
-          }
+          onContentSizeChange={() => ref.current.scrollToEnd({ animated: false })}
         >
           {history.map((value, index) => (
-            <Text style={{ fontSize: 22, color: "white" }} key={index}>
+            <Text style={styles.history} key={index}>
               {value}
             </Text>
           ))}
         </ScrollView>
 
-        <Text style={styles.resultText}>{result === "" ? "0" : result}</Text>
+        <Text style={styles.resultText}>{result === '' ? '0' : result}</Text>
       </View>
 
       <View style={styles.buttonSide}>
-        <TouchableOpacity
-          onPress={() => handleOperation("+")}
-          style={{ ...styles.button, ...styles.operationButton }}
-        >
-          <Text style={{ ...styles.buttonText, color: "black" }}>+</Text>
+        <TouchableOpacity onPress={() => handleOperation('+')} style={styles.button('white')}>
+          <Text style={styles.buttonText('black')}>+</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleOperation('-')} style={styles.button('white')}>
+          <Text style={styles.buttonText('black')}>-</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleOperation('x')} style={styles.button('white')}>
+          <Text style={styles.buttonText('black')}>x</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleOperation('/')} style={styles.button('white')}>
+          <Text style={styles.buttonText('black')}>/</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('7')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>7</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('8')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>8</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('9')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>9</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => handleOperation("-")}
-          style={{ ...styles.button, ...styles.operationButton }}
+          onPress={() => (result.length >= 0 ? setResult(result.slice(0, -1)) : null)}
+          style={styles.button('orange')}
         >
-          <Text style={{ ...styles.buttonText, color: "black" }}>-</Text>
+          <Text style={styles.buttonText()}>DEL</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('4')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>4</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('5')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>5</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('6')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>6</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleAC} style={styles.button('orange')}>
+          <Text style={styles.buttonText()}>AC</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('1')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>1</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('2')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>2</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDigit('3')} style={styles.button('black')}>
+          <Text style={styles.buttonText()}>3</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleComma} style={styles.button('orange')}>
+          <Text style={styles.buttonText()}>,</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => handleOperation("x")}
-          style={{ ...styles.button, ...styles.operationButton }}
+          onPress={() => (result !== '' ? setResult(result + '0') : null)}
+          style={styles.button('black', 'wide')}
         >
-          <Text style={{ ...styles.buttonText, color: "black" }}>x</Text>
+          <Text style={styles.buttonText()}>0</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => handleOperation("/")}
-          style={{ ...styles.button, ...styles.operationButton }}
-        >
-          <Text style={{ ...styles.buttonText, color: "black" }}>/</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("7")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>7</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("8")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>8</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("9")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>9</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            result.length >= 0 ? setResult(result.slice(0, -1)) : null
-          }}
-          style={{ ...styles.button }}
-        >
-          <Text style={styles.buttonText}>DEL</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("4")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>4</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("5")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>5</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("6")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>6</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleAC} style={{ ...styles.button }}>
-          <Text style={styles.buttonText}>AC</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("1")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>1</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("2")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>2</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleDigit("3")}
-          style={{ ...styles.button, ...styles.numberButton }}
-        >
-          <Text style={styles.buttonText}>3</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleComma} style={{ ...styles.button }}>
-          <Text style={styles.buttonText}>,</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            result !== "" ? setResult(result + "0") : null
-          }}
-          style={{ ...styles.button, ...styles.numberButton, width: "44%" }}
-        >
-          <Text style={styles.buttonText}>0</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={handleEaqual}
-          style={{ ...styles.button, width: "44%" }}
-        >
-          <Text style={styles.buttonText}>=</Text>
+        <TouchableOpacity onPress={handleEaqual} style={styles.button('orange', 'wide')}>
+          <Text style={styles.buttonText()}>=</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   )
 }
 
-const windowHeight = Dimensions.get("window").height
+const windowHeight = Dimensions.get('window').height
 
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: "#202020"
+    backgroundColor: '#202020'
   },
 
   header: {
     flex: 1,
-    marginTop: Platform.OS === "android" ? -StatusBar.currentHeight : 0,
-    backgroundColor: "#333333",
-    justifyContent: "flex-end",
+    marginTop: Platform.OS === 'android' ? -StatusBar.currentHeight : 0,
+    backgroundColor: '#333333',
+    justifyContent: 'flex-end',
     paddingLeft: 12
   },
 
   headerText: {
-    color: "white",
+    color: 'white',
     fontSize: 28,
-    fontWeight: "bold"
+    fontWeight: 'bold'
   },
+
+  history: { fontSize: 22, color: 'white' },
 
   results: {
     flex: 4,
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     paddingRight: 12
   },
 
   scroll: {
     flexGrow: 1,
-    flexDirection: "column-reverse",
-    alignItems: "flex-end"
+    flexDirection: 'column-reverse',
+    alignItems: 'flex-end'
   },
 
   resultText: {
-    color: "white",
+    color: 'white',
     fontSize: 48,
-    fontWeight: "600"
+    fontWeight: '600'
   },
 
   buttonSide: {
     flex: 5,
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingBottom: windowHeight / 30
   },
 
   row: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-evenly"
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
   },
 
-  button: {
+  button: (background, wide) => ({
     height: windowHeight / 12,
-    width: "20%",
+    width: wide ? '44%' : '20%',
     borderRadius: windowHeight / 30,
-    marginLeft: "4%",
+    marginLeft: '4%',
     marginTop: windowHeight / 60,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f09a36"
-  },
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: background === 'orange' ? '#f09a36' : background === 'white' ? '#a6a6a6' : '#333333'
+  }),
 
-  operationButton: {
-    backgroundColor: "#a6a6a6"
-  },
-
-  numberButton: {
-    backgroundColor: "#333333"
-  },
-
-  buttonText: {
+  buttonText: (color) => ({
     fontSize: 24,
-    fontWeight: "bold",
-    color: "white"
-  }
+    fontWeight: 'bold',
+    color: color === 'black' ? 'black' : 'white'
+  })
 })
 
 export default App
